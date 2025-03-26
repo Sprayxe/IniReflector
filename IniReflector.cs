@@ -99,7 +99,7 @@ internal class IniReflector
             GetIniValues(reflectorValue, property.Name, out string keyName, out string sectionName);
             
             // Serialize property
-            WriteValue(sectionName, keyName, newValue, reflectorValue?.Description);
+            WriteValue(sectionName, keyName, newValue, reflectorValue.Description);
             Game.LogTrivial($"[DEBUG] IniReflector '{_iniModel.Name}': [{sectionName}] {property.Name} = {newValue}");
         }
         
@@ -112,7 +112,7 @@ internal class IniReflector
             GetIniValues(reflectorValue, field.Name, out string keyName, out string sectionName);
             
             // Serialize field
-            WriteValue(sectionName, keyName, newValue, reflectorValue?.Description);
+            WriteValue(sectionName, keyName, newValue, reflectorValue.Description);
             Game.LogTrivial($"[DEBUG] IniReflector '{_iniModel.Name}': [{sectionName}] {field.Name} = {newValue}");
         }
         
@@ -127,8 +127,8 @@ internal class IniReflector
 
     private void GetIniValues(IniReflectorValue reflectorValue, string memberName, out string keyName, out string sectionName)
     {
-        string initKeyName = reflectorValue?.Name ?? memberName;
-        sectionName = reflectorValue?.SectionName;
+        string initKeyName = reflectorValue.Name ?? memberName;
+        sectionName = reflectorValue.SectionName;
         if (string.IsNullOrEmpty(sectionName))
         {
             sectionName = _sections.Find(s => initKeyName.StartsWith(s.Name)).Name;
