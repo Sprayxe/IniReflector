@@ -106,6 +106,7 @@ Enjoy! :)
 - `bool WriteSingle(string memberName, object newValue)`: Writes a single setting to the .ini file
     - `memberName`: Name of the field/property that is being written (required for getting `IniReflectorValue` info)
     - `newValue`: The new value of the setting
+    - Returns `true` when writing process was successful
 
 # Full Example Code
 ```cs
