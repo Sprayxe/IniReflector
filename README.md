@@ -90,6 +90,23 @@ Simply copy-paste the [IniReflector.cs](https://github.com/Sprayxe/IniReflector/
 You might also wanna check out my [LSPDFR Plugin Reloader](https://github.com/Sprayxe/LSPDFRPluginReloader).\
 Enjoy! :)
 
+# API
+- `IniReflector<T>(string path)`: Creates instance
+    - `T`: Config class
+    - `path`: GTA5 relative path to .ini file
+- `IniReflector(string path, Type iniModel)`: Creates instance
+    - `path`: GTA5 relative path to .ini file
+    - `iniModel`: Type of config class
+- `void Read(object obj, bool withLogging)`: Reads the .ini file into the provided object
+    - `obj`: Instance of config class to deserialize into
+    - `withLogging`: Whether to have verbose logging output or not
+- `void Write(object obj, bool withLogging)`: Writes the provided object to the .ini file
+    - `obj`: Instance of config class to serialize
+    - `withLogging`: Whether to have verbose logging output or not
+- `bool WriteSingle(string memberName, object newValue)`: Writes a single setting to the .ini file
+    - `memberName`: Name of the field/property that is being written (required for getting `IniReflectorValue` info)
+    - `newValue`: The new value of the setting
+
 # Full Example Code
 ```cs
 [assembly: Plugin("MyPlugin", Description = "Example plugin using IniReflector!", PrefersSingleInstance = true)]
