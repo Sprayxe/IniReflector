@@ -119,6 +119,31 @@ internal class IniReflector
         if (withLogging) Game.LogTrivial($"[DEBUG] IniReflector '{_iniModel.Name}': Finished.");
     }
 
+    internal bool WriteSingle(string memberName, object newValue)
+    {
+        if (!_hasReadBefore) return false; // We do not have any information about the object yet
+
+        IniReflectorValue reflectorValue;
+        // Try to find property
+        Tuple<PropertyInfo, IniReflectorValue> pMember = _validProperties.Find(p => p.Item1.Name == memberName);
+        if (pMember != null)
+        {
+            if (pMember.Item1.PropertyType != newValue.GetType()) return false; // Verify property type
+            reflectorValue = pMember.Item2;
+        }
+        else
+        {
+            // Try to find field
+            Tuple<FieldInfo, IniReflectorValue> fMember = _validFields.Find(f => f.Item1.Name == memberName);
+            if (fMember == null || fMember.Item1.FieldType != newValue.GetType()) return false; // We couldn't find the member or the field type mismatched
+            reflectorValue = fMember.Item2;
+        }
+
+        GetIniValues(reflectorValue, memberName, out string keyName, out string sectionName);
+        WriteValue(sectionName, keyName, newValue, reflectorValue.Description);
+        return true;
+    }
+
     private object GetDefaultValueForMember(string memberName, IniReflectorValue reflectorValue, Type memberType)
     {
         if (reflectorValue.DefaultValue != null) return reflectorValue.DefaultValue;
