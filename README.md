@@ -5,7 +5,7 @@ The script will generate missing settings (even the whole file if it is missing)
 If this wasn't already enough, the script supports providing descriptions for settings which will be auto-generated when a setting value is serialized.
 
 # Setting up a config class
-Class fields/properties that represent a .ini setting need to be marked with the\
+Class fields/properties (must be instance members and properties must have a setter) that represent a .ini setting need to be marked with the\
 `IniReflectorValue(string sectionName = null, string name = null, object defaultValue = null, string description = null)` attribute:
 - `sectionName`: The section of the setting. If `null`, see the `IniReflectorSection` attribute below.
 - `name`: The name of the setting in the .ini. If `null`, it defaults to the name of the field/property.
@@ -36,7 +36,8 @@ internal class Config
 
 \
 If you don't provide any `defaultValue` then the script will attempt to look for a class member with the **same name and a `Default` prefix**.
-If it cannot find any it will fallback to `null` for reference types and `default` for value types.
+If it cannot find any it will fallback to `null` for reference types and `default` for value types.\
+(These default members are allowed to be static and/or read-only.)
 - Example:
 ```cs
 [IniReflectorSection("Keybinds")]
