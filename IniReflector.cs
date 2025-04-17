@@ -59,7 +59,7 @@ internal class IniReflector
             
             // Deserialize to property
             property.SetValue(obj, ReadValue(property.PropertyType, sectionName, keyName, defaultValue, reflectorValue.Description));
-            Game.LogTrivial($"[DEBUG] IniReflector '{_iniModel.Name}': [{sectionName}] {property.Name} = {property.GetValue(obj)}");
+            if (withLogging) Game.LogTrivial($"[DEBUG] IniReflector '{_iniModel.Name}': [{sectionName}] {property.Name} = {property.GetValue(obj)}");
         }
         
         // Read fields
@@ -72,7 +72,7 @@ internal class IniReflector
             
             // Deserialize to field
             field.SetValue(obj, ReadValue(field.FieldType, sectionName, keyName, defaultValue, reflectorValue.Description));
-            Game.LogTrivial($"[DEBUG] IniReflector '{_iniModel.Name}': [{sectionName}] {field.Name} = {field.GetValue(obj)}");
+            if (withLogging) Game.LogTrivial($"[DEBUG] IniReflector '{_iniModel.Name}': [{sectionName}] {field.Name} = {field.GetValue(obj)}");
         }
         
         if (withLogging) Game.LogTrivial($"[DEBUG] IniReflector '{_iniModel.Name}': Finished.");
@@ -100,7 +100,7 @@ internal class IniReflector
             
             // Serialize property
             WriteValue(sectionName, keyName, newValue, reflectorValue.Description);
-            Game.LogTrivial($"[DEBUG] IniReflector '{_iniModel.Name}': [{sectionName}] {property.Name} = {newValue}");
+            if (withLogging) Game.LogTrivial($"[DEBUG] IniReflector '{_iniModel.Name}': [{sectionName}] {property.Name} = {newValue}");
         }
         
         // Write fields
@@ -113,7 +113,7 @@ internal class IniReflector
             
             // Serialize field
             WriteValue(sectionName, keyName, newValue, reflectorValue.Description);
-            Game.LogTrivial($"[DEBUG] IniReflector '{_iniModel.Name}': [{sectionName}] {field.Name} = {newValue}");
+            if (withLogging) Game.LogTrivial($"[DEBUG] IniReflector '{_iniModel.Name}': [{sectionName}] {field.Name} = {newValue}");
         }
         
         if (withLogging) Game.LogTrivial($"[DEBUG] IniReflector '{_iniModel.Name}': Finished.");
